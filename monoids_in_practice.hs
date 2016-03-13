@@ -23,6 +23,8 @@ sampleLines =
 
 
 addLine :: OrderLine -> OrderLine -> OrderLine
+addLine (OrderLine "" _ _) line = line
+addLine line (OrderLine "" _ _) = line
 addLine line1 line2 =
   OrderLine {
     productCode = "TOTAL",
