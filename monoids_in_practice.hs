@@ -42,14 +42,21 @@ emptyLine =
   }
 
 
-totalLine :: OrderLine
-totalLine = foldl addLine emptyLine sampleLines
+totalLine :: [OrderLine] -> OrderLine
+totalLine lines = foldl addLine emptyLine lines
 
 
 main = do
-  mapM_ print $ sampleLines
+  mapM_ print sampleLines
+  putStrLn "SUB--------------------"
+  print subtotal
   putStrLn "-----------------------"
-  print totalLine
+  mapM_ print sampleLines
+  putStrLn "-----------------------"
+  print bigTotal
+  where
+    subtotal = totalLine sampleLines
+    bigTotal = totalLine $ sampleLines ++ [subtotal]
 
 
 
