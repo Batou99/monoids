@@ -14,11 +14,6 @@ instance Show OrderLine where
       OrderLine olCode olQuantity olTotal  = orderLine
 
 
-calculateOrderTotal :: [OrderLine] -> Float
-calculateOrderTotal lines =
-  foldl (+) 0 $ map total lines
-
-
 sampleLines :: [OrderLine]
 sampleLines =
   [ OrderLine { productCode = "AAA", quantity = 2, total = 2.99 },
@@ -36,9 +31,23 @@ addLine line1 line2 =
   }
 
 
+emptyLine :: OrderLine
+emptyLine =
+  OrderLine {
+    productCode = "",
+    quantity = 0,
+    total = 0
+  }
+
+
+totalLine :: OrderLine
+totalLine = foldl addLine emptyLine sampleLines
+
+
 main = do
-  mapM_ print sampleLines
-  print $ calculateOrderTotal sampleLines
+  mapM_ print $ sampleLines
+  putStrLn "-----------------------"
+  print totalLine
 
 
 
