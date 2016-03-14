@@ -3,6 +3,7 @@ import Text.Printf
 data OrderLine
   = ProductLine { productCode :: String, productQuantity :: Int, price :: Float, lineTotal :: Float }
   | TotalLine { totalQuantity :: Int, orderTotal :: Float }
+  | EmptyLine
 
 
 instance Show OrderLine where
@@ -21,8 +22,8 @@ sampleLines =
 
 
 addLine :: OrderLine -> OrderLine -> OrderLine
-addLine (ProductLine "" _ _ _) line = line
-addLine line (ProductLine "" _ _ _) = line
+addLine EmptyLine line = line
+addLine line EmptyLine  = line
 addLine (ProductLine _ plQuantity _ plTotal) (TotalLine tlQuantity tlTotal) =
   TotalLine {
     totalQuantity = plQuantity + tlQuantity,
@@ -45,18 +46,8 @@ addLine line1 line2 =
   }
 
 
-emptyLine :: OrderLine
-emptyLine =
-  ProductLine {
-    productCode = "",
-    productQuantity = 0,
-    price = 0,
-    lineTotal = 0
-  }
-
-
 totalLine :: [OrderLine] -> OrderLine
-totalLine lines = foldl addLine emptyLine lines
+totalLine lines = foldl addLine EmptyLine lines
 
 
 main = do
