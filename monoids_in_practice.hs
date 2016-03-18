@@ -4,9 +4,11 @@ import Data.Monoid
 data OrderLine = OrderLine { productCode :: String, productQuantity :: Int, price :: Float, lineTotal :: Float }
 data TotalLine = TotalLine { totalQuantity :: Int, orderTotal :: Float }
 
+
 instance Show OrderLine where
   show (OrderLine plCode plQuantity plPrice plTotal) =
     printf "%-10s %5i @%4g each %6g" plCode plQuantity plPrice plTotal
+
 
 instance Show TotalLine where
   show (TotalLine tlQuantity tlTotal) =
@@ -21,27 +23,18 @@ sampleLines =
   ]
 
 
-add :: TotalLine -> TotalLine -> TotalLine
-add line1 line2 =
-  TotalLine {
-    totalQuantity = totalQuantity line1 + totalQuantity line2,
-    orderTotal = orderTotal line1 + orderTotal line2
-  }
-
-
-zero :: TotalLine
-zero =
-  TotalLine 0 0
-
-
 toTotalLine :: OrderLine -> TotalLine
 toTotalLine line =
   TotalLine { totalQuantity = productQuantity line, orderTotal = lineTotal line }
 
 
 instance Monoid TotalLine where
-  mempty = zero
-  mappend = add
+  mappend line1 line2 =
+    TotalLine {
+      totalQuantity = totalQuantity line1 + totalQuantity line2,
+      orderTotal = orderTotal line1 + orderTotal line2
+    }
+  mempty = TotalLine 0 0
 
 
 main = do
@@ -56,6 +49,3 @@ main = do
     samplesAsTotals = map toTotalLine sampleLines
     subtotal = mconcat samplesAsTotals
     bigTotal = mconcat $ samplesAsTotals ++ [subtotal]
-
-
-
