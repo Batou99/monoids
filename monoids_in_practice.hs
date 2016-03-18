@@ -1,4 +1,5 @@
 import Text.Printf
+import Data.Monoid
 
 data OrderLine = OrderLine { productCode :: String, productQuantity :: Int, price :: Float, lineTotal :: Float }
 data TotalLine = TotalLine { totalQuantity :: Int, orderTotal :: Float }
@@ -36,13 +37,6 @@ zero =
 toTotalLine :: OrderLine -> TotalLine
 toTotalLine line =
   TotalLine { totalQuantity = productQuantity line, orderTotal = lineTotal line }
-
-
-class Monoid m where
-  mempty :: m
-  mappend :: m -> m -> m
-  mconcat :: [m] -> m
-  mconcat = foldr mappend mempty
 
 
 instance Monoid TotalLine where
