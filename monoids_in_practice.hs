@@ -46,8 +46,16 @@ addLine line1 line2 =
   }
 
 
-totalLine :: [OrderLine] -> OrderLine
-totalLine lines = foldl addLine EmptyLine lines
+class Monoid m where
+  mempty :: m
+  mappend :: m -> m -> m
+  mconcat :: [m] -> m
+  mconcat = foldr mappend mempty
+
+
+instance Monoid OrderLine where
+  mempty = EmptyLine
+  mappend = addLine
 
 
 main = do
@@ -59,8 +67,8 @@ main = do
   putStrLn "----------------------------------"
   print bigTotal
   where
-    subtotal = totalLine sampleLines
-    bigTotal = totalLine $ sampleLines ++ [subtotal]
+    subtotal = mconcat sampleLines
+    bigTotal = mconcat $ sampleLines ++ [subtotal]
 
 
 
