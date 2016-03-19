@@ -22,6 +22,14 @@ sampleLines =
   ]
 
 
+moreSampleLines :: [OrderLine]
+moreSampleLines =
+  [ OrderLine { productCode = "DDD", quantity = 4, total = 4.99 },
+    OrderLine { productCode = "BBB", quantity = 1, total = 1.99 },
+    OrderLine { productCode = "EEE", quantity = 2, total = 2.00 }
+  ]
+
+
 addLine :: OrderLine -> OrderLine -> OrderLine
 addLine (OrderLine "" _ _) line = line
 addLine line (OrderLine "" _ _) = line
@@ -42,14 +50,21 @@ emptyLine =
   }
 
 
-totalLine :: OrderLine
-totalLine = foldl addLine emptyLine sampleLines
+totalLine :: [OrderLine] -> OrderLine
+totalLine = foldl addLine emptyLine
 
 
 main = do
-  mapM_ print $ sampleLines
+  mapM_ print sampleLines
+  putStrLn "SUB--------------------"
+  print subtotal
   putStrLn "-----------------------"
-  print totalLine
+  mapM_ print moreSampleLines
+  putStrLn "-----------------------"
+  print bigTotal
+  where
+    subtotal = totalLine sampleLines
+    bigTotal = totalLine $ moreSampleLines ++ [subtotal]
 
 
 
