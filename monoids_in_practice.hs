@@ -1,5 +1,7 @@
+import Prelude hiding (mapM_)
 import Text.Printf
 import Data.Monoid
+import Data.Foldable
 
 data OrderLine = OrderLine { productCode :: String, productQuantity :: Int, price :: Float, lineTotal :: Float }
 data TotalLine = TotalLine { totalQuantity :: Int, orderTotal :: Float }
@@ -54,5 +56,5 @@ main = do
   putStrLn "----------------------------------"
   print bigTotal
   where
-    subtotal = mconcat $ map toTotalLine sampleLines
-    bigTotal = mconcat $ map toTotalLine moreSampleLines ++ [subtotal]
+    subtotal = foldMap toTotalLine sampleLines
+    bigTotal = foldMap toTotalLine moreSampleLines <> subtotal
