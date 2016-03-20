@@ -1,3 +1,5 @@
+module MonoidsInPractice (main) where
+
 import Prelude hiding (mapM_)
 import Text.Printf
 import Data.Monoid
@@ -47,6 +49,7 @@ instance Monoid TotalLine where
   mempty = TotalLine 0 0
 
 
+main :: IO ()
 main = do
   mapM_ print sampleLines
   putStrLn "----------------------------------"
