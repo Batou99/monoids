@@ -31,6 +31,8 @@ mapThenAddCounts pages =
   total
   where
     Sum total = foldMap wordCount pages
+    -- Also 
+    -- Sum total = mconcat $ map wordCount pages
 
 
 joinThenCount :: [String] -> Int
