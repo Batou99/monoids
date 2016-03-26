@@ -1,4 +1,4 @@
-module MonoidHomomorphisms (main) where
+module MonoidHomomorphisms (main, page) where
 
 import Text.Printf
 import Criterion.Main
