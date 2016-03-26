@@ -25,9 +25,9 @@ wordFrequencies page =
     foldF map k = Map.insertWith (+) k 1 map
 
 
-page1 = page "hello world " 1000
-page2 = page "goodbye world " 1000
-page3 = page "foobar " 1000
+page1 = page "hello world" 1000
+page2 = page "goodbye world" 1000
+page3 = page "foobar" 1000
 document = [page1, page2, page3]
 
 
