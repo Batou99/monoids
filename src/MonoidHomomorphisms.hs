@@ -27,24 +27,18 @@ document = replicate 100 $ pageHello 1000
 
 
 mapThenAddCounts :: [String] -> Int
-mapThenAddCounts pages = 
-  total
-  where
-    Sum total = foldMap wordCount pages
+mapThenAddCounts = getSum . foldMap wordCount
     -- Also 
     -- Sum total = mconcat $ map wordCount pages
 
 
 joinThenCount :: [String] -> Int
-joinThenCount pages =
-  total
-  where
-    Sum total = wordCount $ mconcat pages
+joinThenCount = getSum . wordCount . mconcat
 
 
 main :: IO ()
 main = do
-  printf "The word count is %6i\n" $ wordCount $ page "Hello" 1000
+  printf "The word count is %6i\n" $ getSum $ wordCount $ page "Hello" 1000
   defaultMain [
     bgroup "wordcount" [ bench "single page" $ nf wordCount $ page "Hello" 1000 
                        , bench "map then count" $ whnf mapThenAddCounts document
