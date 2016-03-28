@@ -1,20 +1,20 @@
 module MonoidalChar where
 
 import Data.Char
+import Data.Foldable
+import Text.Printf
+
 
 type MChar = String
 
 
-toMChar :: Char -> String
+toMChar :: Char -> MChar
 toMChar x = [x]
-
-
-add :: MChar -> MChar -> MChar
-add = (++)
 
 
 main :: IO ()
 main = do
-  let a = toMChar 'a'
-      b = toMChar 'b'
-  putStrLn $ add a b
+  putStrLn $ foldMap toMChar ['a','b']
+  printf "Estos son los signos de puntuacion: %s" $ foldMap toMChar punctuactionSigns
+  where
+    punctuactionSigns = filter isPunctuation [' '..'z']
