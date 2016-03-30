@@ -86,6 +86,14 @@ executable identity-exe
                      , monoids
   default-language:    Haskell2010
 
+executable maybe-monoidal-validation-exe
+  hs-source-dirs:      src
+  main-is:             MaybeMonoidalValidation.hs
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -main-is MaybeMonoidalValidation
+  build-depends:       base
+                     , monoids
+  default-language:    Haskell2010
+
 test-suite monoids-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
