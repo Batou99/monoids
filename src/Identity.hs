@@ -1,6 +1,7 @@
 module Identity where
 
 import Data.Monoid
+import Text.Printf
 
 data PositiveNumberOrIdentity
   = Positive Int
@@ -26,7 +27,17 @@ instance Monoid a => Monoid (NormalOrIdentity a) where
   mappend x Empty = x
   mappend (Normal x) (Normal y) = Normal (x <> y)
 
+-- Abstraction is Maybe in disguise!
+
+extractOrDefault :: Maybe (Sum Integer) -> Integer -> Integer
+extractOrDefault (Just x) _ = getSum x
+extractOrDefault Nothing def = def
+
 
 main :: IO()
-main = undefined
+main = do
+  let value = foldMap (Just . Sum) [1,2]
+  printf "1+2: %i\n" $ extractOrDefault value (-1)
+  printf "1+0: %i\n" $ extractOrDefault (Just (Sum 1) <> Nothing) 99
+  
 
