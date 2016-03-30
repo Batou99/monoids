@@ -38,6 +38,6 @@ main :: IO()
 main = do
   let value = foldMap (Just . Sum) [1,2]
   printf "1+2: %i\n" $ extractOrDefault value (-1)
-  printf "1+0: %i\n" $ extractOrDefault (Just (Sum 1) <> Nothing) 99
+  printf "1+0: %i\n" $ extractOrDefault (Just (Sum 1) <> Nothing) -1
   
 
